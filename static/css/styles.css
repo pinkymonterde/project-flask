@@ -1,0 +1,267 @@
+/*********** Common css style code start  ************/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    text-decoration: none;
+}
+:root {
+    --first-color: #3a4256;
+    --second-color: #19d3ae;
+    --third-color: #0fcfec;
+    --font-size: 16px;
+}
+.container{
+    max-width: 1440px;
+    margin: 0 auto;
+    font-family: 'Open Sans', sans-serif;
+}
+.fw-four{
+    font-weight: 400;
+}
+.fw-seven{
+    font-weight: 700;
+}
+.fw-six{
+    font-weight: 600;
+}
+.common-get-btn{
+    border-radius: 8px;
+    background: linear-gradient(90deg, #19D3AE -22.5%, #0FCFEC 120.83%);
+    padding: 15px;
+    color: #ffffff;
+    font-size: 14px;
+    border: none;
+    margin-top: 20px;
+}
+.common-heading-one{
+    font-size: 20px;
+    color: var(--second-color);
+}
+.common-heading-two{
+    font-size: 36px;
+    color: var(--first-color);
+}
+.common-heading-three{
+    font-size: 36px;
+    color: #FFF;
+    margin: 22px;
+
+}
+/*********** Common css style code end  ************/
+
+/*********** Header Area style code start  ************/
+
+#header{
+    width: 100%;
+    height: 64px;
+    padding: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.brand-logo img{
+    width: 100px;
+    height: 100px;
+}
+.navigation > ul{
+    display: flex;
+    gap:30px;
+
+}
+.navigation > ul > li >a{
+    font-size: 16px;
+    color: #000000;
+}
+.select-menu-btn{
+    background-color: var(--first-color);
+    opacity: 70%;
+    border-radius: 8px;
+    padding: 11px;
+    color: #D4D9E3 !important;
+}
+/*********** Header Area style code end  ************/
+
+/*********** Banner Section style code start  ************/
+
+#banner-section{
+    max-width: 1363px;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.left-banner-container{
+    max-width: 655px;
+    height: 266px;
+    margin-left: 30px;
+}
+.banner-heading{
+    color: var(--first-color);
+    font-size: 48px;
+}
+.banner-para{
+    font-size: 16px;
+    color: var(--first-color);
+}
+.right-banner-container{
+    max-width: 594px;
+    height: 355px;
+    margin-right: 38px;
+}
+.right-banner-container img{
+    width: 100%;
+    height: 100%;
+}
+/*********** Banner Section style code end  ************/
+
+/*********** vision card Section style code start  ************/
+#vision-section{
+    max-width: 1363px;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.left-vision-container{
+    max-width: 655px;
+    height: 266px;
+    margin-left: 30px;
+}
+.left-vision-container img{
+    width: 278px;
+    height: 30px;
+}
+.vision-heading{
+    color: var(--first-color);
+    font-size: 40px;
+}
+.vision-para{
+    font-size: 16px;
+    color: var(--first-color);
+}
+.right-vision-container{
+    max-width: 594px;
+    height: 355px;
+    margin-right: 38px;
+}
+.right-vision-container img{
+    width: 100%;
+    height: 100%;
+}
+/*********** vision Section style code end  ************/
+
+/*********** mission card Section style code start  ************/
+#mission-section{
+    max-width: 1363px;
+    height:500px;
+    margin: 0 auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.right-mission-container{
+    max-width: 655px;
+    height: 266px;
+    margin-right: 38px;
+    margin-left: 10px;
+}
+.right-mission-container img{
+    width: 278px;
+    height: 30px;
+}
+.mission-heading{
+    color: var(--first-color);
+    font-size: 40px;
+}
+.mission-para{
+    font-size: 16px;
+    color: var(--first-color);
+}
+.left-mission-container{
+    max-width: 600px;
+    height: 300px;
+    margin-left: 30px;
+}
+.left-mission-container img{
+    width: 100%;
+    height: 100%;
+}
+/*********** mission Section style code end  ************/
+
+
+/*********** Contact section start  ************/
+#contact-section{
+    width: 100%;
+    height: 604px;
+    background-color:#3a4256;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contact-container{
+    width: 450px;
+    height: 468px;
+    text-align: center;
+}
+.form-input{
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border-radius:8px;
+    border: none;
+    margin-bottom: 19px;
+}
+textarea{
+    width: 100%;
+    height: 136px;
+    border-radius: 8px;
+    border: none;
+    padding: 15px;
+    resize: vertical;
+}
+form > button{
+    padding: 15px 30px !important;
+}
+/*********** Contact section end  ************/
+
+/*********** Footer start  ************/
+#footer{
+    width: 100%;
+    height: 407px;
+    background-image: url('assets/images/footer_bg_1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.footer-uper-container{
+    padding: 70px 70px;
+    display: flex;
+    justify-content: space-between;
+}
+.footer-menu-heading{
+    font-size: 18px;
+    color: #FFFFFF;
+    margin-bottom: 19px;
+}
+.footer-menu-para{
+    font-size: 16px;
+    color: #FFFFFF;
+    overflow-wrap: break-word;
+}
+
+.footer-menu-ul > li > a{
+    color: #FFFFFF;
+}
+.copyright{
+    text-align: center;
+}
+/*********** Footer end  ************/

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduVision | Home</title>
+    <!--********** External css file links start  **********-->
+    <link rel="stylesheet" href={{ url_for('static', filename='styles.css') }}>
+    <!--********** External css file links end  **********-->
+
+    <!--********** Google font link start  **********-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
+    <!--********** Google font link end  **********-->
+
+</head>
+
+<body>
+    <!--********** Main Container start  **********-->
+    <div class="container">
+        <!--******** Header Area start  ********-->
+        <header id="header">
+            <div class="brand-logo">
+                 <img src="{{ url_for('static', filename='assets/images/logo.png') }}" alt="">
+            </div>
+            <nav class="navigation">
+                <ul class="">
+                    <li><a class="select-menu-btn" href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="#">Vision</a></li>
+                    <li><a href="#">Mission</a></li>
+                </ul>
+            </nav>
+        </header>
+        <!--******** Header Area end  ********-->
+        <!--******** Main Area start  ********-->
+        <main>
+            <!--******** Banner section start  ********-->
+            <section id="banner-section">
+                <div class="left-banner-container">
+                    <h2 class="banner-heading fw-seven">Navigating The Educational Landscape</h2>
+                    <p class="banner-para fw-four">Fostering Academic Success by Tailoring Educational Support to <br/> Address Global Learning Needs <br/> <br/></p>
+                    <a href="{{ url_for('upload_metadata') }}" class="common-get-btn fw-seven">UPLOAD FILE</a>
+                </div>
+                <div class="right-banner-container">
+                    <img src="{{ url_for('static', filename='assets/images/graph_1.png') }}" alt="">
+                </div>
+            </section>
+            <!--******** Banner section end  ********-->
+
+            <!--******** vision section start  ********-->
+            <section id="vision-section">
+                <div class="left-vision-container">
+                    <div>
+                        <img src="{{ url_for('static', filename='assets/images/our_vision.png') }}" alt="">
+                    </div>
+                    <h2 class="vision-heading fw-seven">Our vision is to create a literate and empowered nation</h2>
+                    <p class="vision-para fw-four">where each individual, regardless of age or environment, has the opportunity <br />
+                        to acquire and utilize literacy skills to improve their quality of life and contribute<br />
+                         to the socio-economic development of the country</p>
+                </div>
+                <div class="right-vision-container">
+                    <img src="{{ url_for('static', filename='assets/images/graph_2.png') }}" alt="">
+                </div>
+            </section>
+            <!--******** vision section end  ********-->
+
+            <!--******** mission section start  ********-->
+            <section id="mission-section">
+                <div class="left-mission-container">
+                    <img src="{{ url_for('static', filename='assets/images/graph_3.png') }}" alt="">
+                </div>
+                <div class="right-mission-container">
+                    <div>
+                        <img src="{{ url_for('static', filename='assets/images/our_mission.png') }}" alt="">
+                    </div>
+                    <h2 class="mission-heading fw-seven">We aim to bridge the gap between the literacy rate of the regions in the country</h2>
+                    <p class="mission-para fw-four">and identify key factors influencing literacy levels to implement evidence-based
+                        strategies that address literacy gaps.</p>
+                </div>
+            </section>
+            <!--******** mission section end  ********-->
+
+
+            <!--******** Contact section start  ********-->
+            <section id="contact-section">
+                <div class="contact-container">
+                    <div class="contact-heading-container">
+                        <h3 class="common-heading-one fw-seven">Contact</h3>
+                        <h4 class="common-heading-three fw-four">Stay connected with us</h4>
+                    </div>
+                    <form>
+                        <input class="form-input" placeholder="Email Address" type="email">
+                        <input class="form-input" placeholder="Subject" type="text" name="" id="">
+                        <textarea placeholder="Your message" name="" id=""></textarea>
+                        <button class="common-get-btn fw-seven">Submit</button>
+                    </form>
+                </div>
+            </section>
+            <!--******** Contact section end  ********-->
+        </main>
+        <!--******** Main Area end  ********-->
+
+        <footer id="footer">
+            <div class="footer-uper-container">
+               <div>
+                    <h5 class="footer-menu-heading fw-seven">EduVision</h5>
+                    <p class="footer-menu-para fw-four"> Our expert data analyst provide solutions to help you achieve <br/>
+                        educational wealth. Trust us to guide you toward a brighter future.</p>
+               </div>
+               <div>
+                    <h5 class="footer-menu-heading fw-seven">Features</h5>
+                    <ul class="footer-menu-ul">
+                        <li><a href="{{ url_for('upload_metadata') }}">Upload File</a></li>
+                        <li><a href="">Data Table</a></li>
+                        <li><a href="">Graph</a></li>
+                    </ul>
+               </div>
+               <div>
+                    <h5 class="footer-menu-heading fw-seven">Our Address</h5>
+                   <address>
+                    <p class="footer-menu-para fw-four">Philippines</p>
+                  </address>
+               </div>
+            </div>
+            <div class="copyright">
+                <p>Copyright 2024 || All Rights Reserved</p>
+            </div>
+        </footer>
+    </div>
+    <!--********** Main Container start  **********-->
+</body>
+</html>
