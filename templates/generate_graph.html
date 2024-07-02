@@ -1,38 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Generate Graphs</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaded File Analysis</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/generate-graph.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/generate_graph.css') }}">
 </head>
 <body>
-    <div class="container my-5">
-        <h1 class="text-center mb-4">Generate Graphs</h1>
+    <div class="analysis">
+        <h1 class="mt-4">Dashboard</h1>
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-                {% if scatter_plot %}
-                <img src="{{ scatter_plot }}" class="img-fluid mb-4" alt="Scatter Plot">
-                {% endif %}
-                {% if heatmap %}
-                <img src="{{ heatmap }}" class="img-fluid mb-4" alt="Heatmap">
-                {% endif %}
-                {% if budget_scatter_plot %}
-                <img src="{{ budget_scatter_plot }}" class="img-fluid mb-4" alt="Budget vs. Literacy Rate">
-                {% endif %}
-                {% if textbooks_scatter_plot %}
-                <img src="{{ textbooks_scatter_plot }}" class="img-fluid mb-4" alt="Textbooks Per Student vs. Literacy Rate">
-                {% endif %}
-                {% if survival_rate_line_plot %}
-                <img src="{{ survival_rate_line_plot }}" class="img-fluid mb-4" alt="School Survival Rate Over Time by Region">
-                {% endif %}
-                {% if regional_analysis_facet_grid %}
-                <img src="{{ regional_analysis_facet_grid }}" class="img-fluid" alt="Comparative Regional Analysis">
-                {% endif %}
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='line_plot_tpr.png') }}" class="img-fluid mb-3" alt="heat_map_tpr.png">
+            </div>
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='scatter_plot_literacy.png') }}" class="img-fluid mb-3" alt="scatter_plot_literacy">
             </div>
         </div>
-        <div class="row mt-4">
-            <div class="col-md-6 offset-md-3">
-                <a href="{{ url_for('index') }}" class="btn btn-primary btn-block">Back to File Viewer</a>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='line_plot_survival.png') }}" class="img-fluid mb-3" alt="line_plot_survival">
+            </div>
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='bar_plot_textbook.png') }}" class="img-fluid mb-3" alt="bar_plot_textbook">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ url_for('static', filename='outlier_plot_budget.png') }}" class="img-fluid mb-3" alt="outlier_plot_budget">
             </div>
         </div>
     </div>
