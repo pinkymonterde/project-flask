@@ -1,12 +1,34 @@
+/* styles.css */
+
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form-group {
+  flex-grow: 1;
+}
+
+.form-control-file {
+  border-radius: 8px;
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .upload-container {
@@ -29,6 +51,8 @@ body {
     border-radius: 4px;
 }
 
+.btn-danger:hover {
+  color: #fff;
 button {
     background-color: #007BFF;
     color: #fff;
@@ -40,5 +64,26 @@ button:hover {
 }
 
 #fileList {
+{
     margin-top: 20px;
+    text-align: center;
 }
+
+.generate-graphs .btn {
+  border-radius: 8px;
+    background: linear-gradient(90deg, #19D3AE -22.5%, #0FCFEC 120.83%);
+    padding: 15px;
+    color: white;
+    border: none;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.generate-graphs:hover {
+    background-color: #ffff;
+}
+
+
+
+
+
