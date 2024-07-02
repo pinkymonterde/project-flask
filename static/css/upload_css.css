@@ -52,7 +52,9 @@ body {
 }
 
 .btn-danger:hover {
-  color: #fff;
+    color: #fff;
+}
+
 button {
     background-color: #007BFF;
     color: #fff;
@@ -64,7 +66,6 @@ button:hover {
 }
 
 #fileList {
-{
     margin-top: 20px;
     text-align: center;
 }
