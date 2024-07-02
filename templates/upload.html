@@ -1,108 +1,49 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - youtube.com/codingnepal -->
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>File Upload with Progress Bar | PKcoding</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='upload.css') }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <title>File Viewer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload_css.css') }}">
 </head>
 <body>
-  <div class="wrapper">
-    <header>File Uploader JavaScript</header>
-    <form action="#">
-      <input class="file-input" type="file" name="file" hidden>
-      <i class="fas fa-cloud-upload-alt"></i>
-      <p>Browse File to Upload</p>
-    </form>
-    <section class="progress-area"></section>
-    <section class="uploaded-area"></section>
-  </div>
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Upload File</h1>
+        <form method="POST" enctype="multipart/form-data" class="d-flex justify-content-center mb-4">
+            <div class="form-group">
+                <input type="file" class="form-control-file" name="file">
+            </div>
+            <button type="submit" class="btn btn-primary ml-2">Import</button>
+        <form method="POST" action="{{ url_for('purge') }}" class="d-flex justify-content-center mb-4">
+            <button type="submit" class="btn btn-danger ml-2">Delete</button>
+        </form>
+        </form>
 
-  <script src="{{ url_for('static', filename='scripts') }}"></script>
+        {% if columns and df %}
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for column in columns %}
+                    <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in df %}
+                <tr>
+                    {% for column in columns %}
+                    <td>{{ row[column] }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
 
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-<!---<html>
-	<head>
-		<title>Upload Excel File</title>
-		<link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}">
-		<script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
-	</head>
-	<body>
-		<div class="col-md-offset-3 col-md-5" style="margin-top:70px">
-			<form method="POST" action="/" enctype="multipart/form-data">
-				<h3 class="page-header text-primary">Upload Excel File</h3>
-				<div class="form-group">
-					<label>Browse Excel File</label>
-					<input type="file" class="form-control" name="upload_excel">
-				</div>
-				<div class="form-group">
-					<button type="submit" class="btn btn-success btn-block">Upload Excel</button>
-				</div>
-			</form>
-		</div>
-	</body>
-</html>--->
-
-
-<!---<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Upload File</title>
-</head>
-<body>
-    <h1>Upload a File</h1>
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload">
-    </form>
-</body>
-</html>
---->
-
-
-<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload File</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Upload File</h1>
-            <nav>
-                <ul>
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('upload') }}">Upload File</a></li>
-                </ul>
-            </nav>
-        </header>
-        <section id="upload" class="section">
-            <h2>Select a file to upload</h2>
-            <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" required>
-                <button type="submit">Upload</button>
+        <div class="generate-graphs">
+            <form method="POST" action="{{ url_for('generate_graph') }}">
+                <button type="submit" class="btn btn-primary">Start Analysis</button>
             </form>
-        </section>
-        <footer>
-            <button onclick="location.href='{{ url_for('index') }}'">Back</button>
-        </footer>
+        </div>
     </div>
 </body>
 </html>
--->
