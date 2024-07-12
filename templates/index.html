@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduVision | Home</title>
     <!--********** External css file links start  **********-->
-    <link rel="stylesheet" href={{ url_for('static', filename='styles.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/styles.css') }}>
     <!--********** External css file links end  **********-->
 
     <!--********** Google font link start  **********-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
     <!--********** Google font link end  **********-->
 
 </head>
@@ -30,8 +30,10 @@
             <nav class="navigation">
                 <ul class="">
                     <li><a class="select-menu-btn" href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="#">Vision</a></li>
-                    <li><a href="#">Mission</a></li>
+                    <li><a class="select-menu-btn" href="#vision-section">Vision</a></li>
+                    <li><a class="select-menu-btn" href="#mission-section">Mission</a></li>
+                    <li><a class="select-menu-btn" href="#team-section">Team</a></li>
+                    <li><a class="select-menu-btn" href="#contact-section">Contact Us</a></li>
                 </ul>
             </nav>
         </header>
@@ -43,7 +45,7 @@
                 <div class="left-banner-container">
                     <h2 class="banner-heading fw-seven">Navigating The Educational Landscape</h2>
                     <p class="banner-para fw-four">Fostering Academic Success by Tailoring Educational Support to <br/> Address Global Learning Needs <br/> <br/></p>
-                    <a href="{{ url_for('upload_metadata') }}" class="common-get-btn fw-seven">UPLOAD FILE</a>
+                    <a href="{{ url_for('upload') }}" class="common-get-btn fw-seven">UPLOAD FILE</a>
                 </div>
                 <div class="right-banner-container">
                     <img src="{{ url_for('static', filename='assets/images/graph_1.png') }}" alt="">
@@ -84,6 +86,51 @@
             </section>
             <!--******** mission section end  ********-->
 
+            <!--******** team section start  ********-->
+            <section id="team-section">
+                <h2 class="team-heading fw-seven">Meet the Team</h2>
+                <div class="wrapper">
+                    <i id="left" class="fa-solid fa-angle-left"></i>
+                    <ul class="carousel">
+                        <li class="card">
+                            <div class="img"><img src="{{ url_for('static', filename='assets/images/jomeo.png') }}" alt="img" draggable="false"></div>
+                            <h2>Jomeo Dela Cruz</h2>
+                            <span>Leader</span>
+                        </li>
+                        <li class="card">
+                            <div class="img"><img src="{{ url_for('static', filename='assets/images/kiana.png') }}" alt="img" draggable="false"></div>
+                            <h2>Kiana Alvarez</h2>
+                            <span>Project Manager</span>
+                        </li>
+                        <li class="card">
+                            <div class="img"><img src="{{ url_for('static', filename='assets/images/pinky.png') }}" alt="img" draggable="false"></div>
+                            <h2>Pinky Monterde</h2>
+                            <span>Developer</span>
+                        </li>
+                        <li class="card">
+                            <div class="img"><img src="{{ url_for('static', filename='assets/images/jerica.png') }}" alt="img" draggable="false"></div>
+                            <h2>Jerica Galve</h2>
+                            <span>Developer</span>
+                        </li>
+                        <li class="card">
+                           <div class="img"><img src="{{ url_for('static', filename='assets/images/huge.png') }}" alt="img" draggable="false"></div>
+                           <h2>Huge Novilla</h2>
+                           <span>Developer</span>
+                        </li>
+                        <li class="card">
+                           <div class="img"><img src="{{ url_for('static', filename='assets/images/haven.png') }}" alt="img" draggable="false"></div>
+                           <h2>Haven Dayola</h2>
+                           <span>QA Tester</span>
+                        </li>
+                        <li class="card">
+                           <div class="img"><img src="{{ url_for('static', filename='assets/images/angelica.png') }}" alt="img" draggable="false"></div>
+                           <h2>Angelica Nanas</h2>
+                           <span>QA Tester</span>
+                        </li>
+                    </ul>
+                    <i id="right" class="fa-solid fa-angle-right"></i>
+                </div>
+            </section>
 
             <!--******** Contact section start  ********-->
             <section id="contact-section">
@@ -110,14 +157,6 @@
                     <h5 class="footer-menu-heading fw-seven">EduVision</h5>
                     <p class="footer-menu-para fw-four"> Our expert data analyst provide solutions to help you achieve <br/>
                         educational wealth. Trust us to guide you toward a brighter future.</p>
-               </div>
-               <div>
-                    <h5 class="footer-menu-heading fw-seven">Features</h5>
-                    <ul class="footer-menu-ul">
-                        <li><a href="{{ url_for('upload_metadata') }}">Upload File</a></li>
-                        <li><a href="">Data Table</a></li>
-                        <li><a href="">Graph</a></li>
-                    </ul>
                </div>
                <div>
                     <h5 class="footer-menu-heading fw-seven">Our Address</h5>

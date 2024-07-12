@@ -3,34 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uploaded File Analysis</title>
+    <title>Dashboard</title>
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/generate_graph.css') }}">
+    <style>
+        /* Custom styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+        .card-body {
+            text-align: center; /* Center the content inside the card body */
+        }
+        .analysis img {
+            max-height: 300px;
+            width: 100%;
+            cursor: pointer; /* Change cursor to pointer to indicate zoom functionality */
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 10; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 900px;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+        @keyframes zoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .center-text {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="analysis">
-        <h1 class="mt-4">Dashboard</h1>
-        <div class="row">
+    <div class="container-fluid">
+        <h1 class="mt-4 center-text">Dashboard</h1>
+        <div class="row d-flex justify-content-center">
             <div class="col-md-6">
-                <img src="{{ url_for('static', filename='line_plot_tpr.png') }}" class="img-fluid mb-3" alt="heat_map_tpr.png">
-            </div>
-            <div class="col-md-6">
-                <img src="{{ url_for('static', filename='scatter_plot_literacy.png') }}" class="img-fluid mb-3" alt="scatter_plot_literacy">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <img src="{{ url_for('static', filename='line_plot_survival.png') }}" class="img-fluid mb-3" alt="line_plot_survival">
-            </div>
-            <div class="col-md-6">
-                <img src="{{ url_for('static', filename='bar_plot_textbook.png') }}" class="img-fluid mb-3" alt="bar_plot_textbook">
+                <div class="card">
+                    <div class="card-body analysis">
+                        <h5 class="card-title">Literacy Rate by Region</h5>
+                        <img src="{{ url_for('static', filename='bar_chart_literacy.png') }}" class="img-fluid mb-3" alt="Literacy Rate">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
-                <img src="{{ url_for('static', filename='outlier_plot_budget.png') }}" class="img-fluid mb-3" alt="outlier_plot_budget">
+                <div class="card">
+                    <div class="card-body analysis">
+                        <h5 class="card-title">Teacher to Pupil Ratio by Region</h5>
+                        <img src="{{ url_for('static', filename='bar_plot_tpr.png') }}" class="img-fluid mb-3" alt="Teacher to Pupil Ratio">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body analysis">
+                        <h5 class="card-title">School Survival Rate by Region</h5>
+                        <img src="{{ url_for('static', filename='bar_plot_survival.png') }}" class="img-fluid mb-3" alt="School Survival Rate">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body analysis">
+                        <h5 class="card-title"> Textbook Availability by Region</h5>
+                        <img src="{{ url_for('static', filename='line_chart_textbook.png') }}" class="img-fluid mb-3" alt="Textbook Availability">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body analysis">
+                        <h5 class="card-title">Budget Allocation by Region</h5>
+                        <img src="{{ url_for('static', filename='line_chart_budget.png') }}" class="img-fluid mb-3" alt="Budget Allocation">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS for image zoom -->
+    <script>
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+        // Get the image and insert it inside the modal
+        var modalImg = document.getElementById("img01");
+
+        document.querySelectorAll('.analysis img').forEach(img => {
+            img.addEventListener('click', () => {
+                modal.style.display = "block";
+                modalImg.src = img.src;
+            });
+        });
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+    </script>
 </body>
 </html>

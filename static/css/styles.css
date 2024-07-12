@@ -12,7 +12,11 @@
     --third-color: #0fcfec;
     --font-size: 16px;
 }
-.container{
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     max-width: 1440px;
     margin: 0 auto;
     font-family: 'Open Sans', sans-serif;
@@ -55,11 +59,16 @@
 
 #header{
     width: 100%;
-    height: 64px;
-    padding: 70px;
+    height: 5%;
+    padding: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed; /* Make header fixed */
+    top: 0; /* Align to the top */
+    left: 0; /* Align to the left */
+    z-index: 1000; /* Ensure header is above other content */
+    background-color: #fff;
 }
 .brand-logo img{
     width: 100px;
@@ -74,20 +83,25 @@
     font-size: 16px;
     color: #000000;
 }
-.select-menu-btn{
-    background-color: var(--first-color);
-    opacity: 70%;
+.select-menu-btn {
+    background-color: transparent;
     border-radius: 8px;
     padding: 11px;
-    color: #D4D9E3 !important;
+    color: #000000; /* Removed !important to allow hover to change color */
+    transition: color 0.3s ease; /* Smooth transition for text color */
 }
+
+.select-menu-btn:hover {
+    color: var(--second-color); /* Text color changes to white on hover */
+}
+
 /*********** Header Area style code end  ************/
 
 /*********** Banner Section style code start  ************/
 
 #banner-section{
     max-width: 1363px;
-    height: 400px;
+    height: 600px;
     margin: 0 auto;
     margin-top: 20px;
     display: flex;
@@ -121,7 +135,7 @@
 /*********** vision card Section style code start  ************/
 #vision-section{
     max-width: 1363px;
-    height: 400px;
+    height: 600px;
     margin: 0 auto;
     margin-top: 20px;
     display: flex;
@@ -195,6 +209,127 @@
 }
 /*********** mission Section style code end  ************/
 
+/*********** team Section style code start  ************/
+
+#team section {
+    max-width: 900px;
+    margin: 15px 0; /* Center horizontally */
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    display: flex;
+    padding: 0 15px;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    background: #FFFFFF;
+}
+
+.team-heading{
+    color: var(--first-color);
+    font-size: 40px;
+    text-align: center; /* Center text horizontally */
+}
+
+.wrapper {
+    max-width: 900px;
+    width: 100%;
+    margin: 15px auto; /* Center horizontally in the viewport */
+    display: flex;
+    position: relative;
+    justify-content: center;
+}
+.wrapper i {
+  top: 50%;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  position: absolute;
+  text-align: center;
+  line-height: 50px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.23);
+  transform: translateY(-50%);
+  transition: transform 0.1s linear;
+}
+.wrapper i:active{
+  transform: translateY(-50%) scale(0.85);
+}
+.wrapper i:first-child{
+  left: -22px;
+}
+.wrapper i:last-child{
+  right: -22px;
+}
+.wrapper .carousel{
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% / 3) - 12px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 16px;
+  border-radius: 8px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+.carousel.no-transition {
+  scroll-behavior: auto;
+}
+.carousel.dragging {
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+}
+.carousel.dragging .card {
+  cursor: grab;
+  user-select: none;
+}
+.carousel :where(.card, .img) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.carousel .card {
+  scroll-snap-align: start;
+  height: 342px;
+  list-style: none;
+  background: #fff;
+  cursor: pointer;
+  padding-bottom: 15px;
+  flex-direction: column;
+  border-radius: 8px;
+}
+.carousel .card .img {
+  background: var(--second-color);
+  height: 148px;
+  width: 148px;
+  border-radius: 50%;
+}
+.card .img img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+}
+.carousel .card h2 {
+  font-weight: 500;
+  font-size: 1.56rem;
+  margin: 30px 0 5px;
+}
+.carousel .card span {
+  color: #6A6D78;
+  font-size: 1.31rem;
+}
+@media screen and (max-width: 700px) {
+  .wrapper .carousel {
+    grid-auto-columns: calc((100% / 2) - 9px);
+  }
+}
+
 
 /*********** Contact section start  ************/
 #contact-section{
@@ -237,7 +372,7 @@ form > button{
 #footer{
     width: 100%;
     height: 407px;
-    background-image: url('assets/images/footer_bg_1.png');
+    background-image: url('../assets/images/footer_bg_1.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

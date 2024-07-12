@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
 from flask_sqlalchemy import SQLAlchemy
+import numpy as np
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -24,16 +25,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+
 # Define the database model
 class Summary(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     region = db.Column(db.String(120), nullable=False)
     tpr_region = db.Column(db.String(120), nullable=False)
-    budget = db.Column(db.Float, nullable=False)
-    tpr = db.Column(db.Float, nullable=False)
+    budget = db.Column(db.Integer, nullable=False)
+    tpr = db.Column(db.Integer, nullable=False)
     textbook = db.Column(db.Integer, nullable=False)
-    literacy = db.Column(db.Float, nullable=False)
-
+    literacy = db.Column(db.Integer, nullable=False)
+    students = db.Column(db.Integer, nullable=False)
+    SURVIVAL_RATE = db.Column(db.Integer, nullable=False)
     def __repr__(self):
         return f'<Summary {self.region}>'
 
@@ -72,77 +75,101 @@ def process_data(df):
 
 
 def create_plots(df):
-    # Line Plot: Teacher to Pupil Ratio (TPR) Impact on Literacy Rate
-    line_plot_tpr = plt.figure(figsize=(16, 10))
-    df_melted = df.melt(id_vars='TPR_REGION', value_vars='LITERACY')
-    sns.lineplot(x='TPR_REGION', y='value', hue='variable', data=df_melted, palette="dark")
-    plt.title("Teacher to Pupil Ratio (TPR) Impact on Literacy Rate")
-    plt.xlabel("Teacher to Pupil Ratio (TPR)")
-    plt.ylabel("Literacy Rate")
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    line_plot_tpr_path = os.path.join(app.config['STATIC_FOLDER'], 'line_plot_tpr.png')
-    plt.savefig(line_plot_tpr_path)
+    sns.set(style="whitegrid")
 
-    # Scatter Plot: Budget Allocation and Literacy Rates:
-    scatter_plot_budget = plt.figure(figsize=(16, 10))
-    sns.regplot(x='BUDGET', y='LITERACY', data=df, color=sns.color_palette("Spectral", 20)[17])
-    plt.title('Correlation of Budget Allocation and Literacy Rates')
-    plt.xlabel("Budget Allocation")
-    plt.ylabel("Literacy Rate")
-    plt.tight_layout()
-    scatter_plot_budget_path = os.path.join(app.config['STATIC_FOLDER'], 'scatter_plot_literacy.png')
-    plt.savefig(scatter_plot_budget_path)
-
-    # Bar plot: Impact of Textbook Availability on Literacy
-    bar_plot_textbook = plt.figure(figsize=(16, 10))
-    avg_literacy = df.groupby(['TEXTBOOK', 'TPR_REGION'])['LITERACY'].mean().reset_index()
-    sns.barplot(x='TEXTBOOK', y='LITERACY', hue='TPR_REGION', data=avg_literacy, palette="Spectral")
-    plt.title('Impact of Textbook Availability on Literacy')
-    plt.xlabel("Textbooks Per Region")
-    plt.ylabel("Average Literacy Rate")
-    plt.ylim(20, 150)
-    plt.tight_layout()
-    plt.legend(title='Region', loc='upper left')
-    bar_plot_textbook_path = os.path.join(app.config['STATIC_FOLDER'], 'bar_plot_textbook.png')
-    plt.savefig(bar_plot_textbook_path)
-
-    # Line Plot: School Survival Rate Correlation with Region
-    line_plot_survival = plt.figure(figsize=(16, 10))
-    df_filtered = df[(df['SURVIVAL_YEAR'] >= 2006) & (df['SURVIVAL_YEAR'] <= 2014)]
-    sns.barplot(x='SURVIVAL_YEAR', y='SURVIVAL_RATE', hue='REGION_SURVIVAL', data=df_filtered, palette="Spectral")
-    plt.title('School Survival Rate Over Time by Region')
-    plt.xlabel("Year")
-    plt.ylabel("School Survival Rate")
-    plt.tight_layout()
-    line_plot_survival_path = os.path.join(app.config['STATIC_FOLDER'], 'line_plot_survival.png')
-    plt.savefig(line_plot_survival_path)
-
-    # Comparative Regional Analysis
-    df_analysis = df[['TPR_REGION', 'BUDGET', 'TPR', 'TEXTBOOK', 'LITERACY']].copy()
-    average_budget = df_analysis['BUDGET'].mean()
-    average_tpr = df_analysis['TPR'].mean()
-    average_textbook = df_analysis['TEXTBOOK'].mean()
-    df_analysis['Outlier'] = ((df_analysis['BUDGET'] > average_budget) |
-                              (df_analysis['TPR'] < average_tpr) |
-                              (df_analysis['TEXTBOOK'] > average_textbook)) & (df_analysis['LITERACY'] < df_analysis['LITERACY'].mean())
-    outlier_plot_budget = plt.figure(figsize=(16, 10))
-    sns.regplot(x='BUDGET', y='LITERACY', data=df_analysis, scatter_kws={'s': 50, 'alpha': 0.5}, line_kws={'color': 'red'})
-    plt.title("Comparative Regional Analysis")
-    plt.xlabel("Budget")
-    plt.ylabel("Literacy Rate")
-    plt.tight_layout()
-    outlier_plot_budget_path = os.path.join(app.config['STATIC_FOLDER'], 'outlier_plot_budget.png')
-    plt.savefig(outlier_plot_budget_path)
-
-    return {
-        'line_plot_tpr': line_plot_tpr_path,
-        'scatter_plot_budget': scatter_plot_budget_path,
-        'bar_plot_textbook': bar_plot_textbook_path,
-        'line_plot_survival': line_plot_survival_path,
-        'outlier_plot_budget': outlier_plot_budget_path,
+    # Define region colors
+    region_colors = {
+        'NCR': '#1f77b4',  # muted blue
+        'CAR': '#ff7f0e',  # safety orange
+        'I': '#2ca02c',  # cooked asparagus green
+        'II': '#d62728',  # brick red
+        'III': '#9467bd',  # muted purple
+        'IV-A': '#8c564b',  # chestnut brown
+        'IV-B': '#e377c2',  # raspberry yogurt pink
+        'V': '#7f7f7f',  # middle gray
+        'VI': '#bcbd22',  # curry yellow-green
+        'VII': '#17becf',  # blue-teal
+        'VIII': '#ffbb78',  # light orange
+        'IX': '#98df8a',  # light green
+        'X': '#ff9896',  # light red
+        'XI': '#c5b0d5',  # light purple
+        'XII': '#c49c94',  # light brown
+        'XIII': '#f7b6d2',  # light pink
+        'ARMM': '#dbdb8d'  # light yellow-green
     }
 
+    # Plot: Number of Teachers and Students per Region
+    df_melted = df.reset_index().melt(id_vars=['REGION'], value_vars=['TEACHER', 'STUDENTS'], var_name='Category',
+                                      value_name='Total')
+    bar_plot_tpr, ax = plt.subplots(figsize=(10, 6))
+    ax = sns.barplot(data=df_melted, x='REGION', y='Total', hue='Category', palette={'TEACHER': 'b', 'STUDENTS': 'r'})
+    ax.set_xticklabels(df_melted['REGION'], rotation=45)
+    plt.xlabel('Region', fontweight='bold')
+    plt.ylabel('Total Number', fontweight='bold')
+    plt.legend()
+    bar_plot_tpr_path = os.path.join(app.config['STATIC_FOLDER'], 'bar_plot_tpr.png')
+    plt.savefig(bar_plot_tpr_path, bbox_inches='tight', dpi=300)
+    plt.close(bar_plot_tpr)
+
+    # Line Graph: Budget Allocation
+    line_chart_budget = plt.figure(figsize=(10, 6))
+    sns.lineplot(x='REGION', y='BUDGET', data=df, marker='o', color='r')
+    plt.xlabel("Region", fontweight='bold')
+    plt.ylabel("Average Budget Allocation", fontweight='bold')
+    plt.xticks(rotation=45, fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.tight_layout()
+    line_chart_budget_path = os.path.join(app.config['STATIC_FOLDER'], 'line_chart_budget.png')
+    plt.savefig(line_chart_budget_path, bbox_inches='tight', dpi=300)
+    plt.close(line_chart_budget)
+
+    # Line Graph: Textbook Availability per Region
+    line_chart_textbook = plt.figure(figsize=(10, 6))
+    sns.lineplot(x='REGION', y='TEXTBOOK', data=df, marker='o', color='b')
+    plt.xlabel("Region", fontweight='bold')
+    plt.ylabel("Average Textbooks Distribution", fontweight='bold')
+    plt.xticks(rotation=45, fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.tight_layout()
+    line_chart_textbook_path = os.path.join(app.config['STATIC_FOLDER'], 'line_chart_textbook.png')
+    plt.savefig(line_chart_textbook_path, bbox_inches='tight', dpi=300)
+    plt.close(line_chart_textbook)
+
+
+    # Bar plot: School Survival Rate by Region
+    bar_plot_survival = plt.figure(figsize=(10, 6))
+    sns.barplot(x='REGION', y='SURVIVAL_RATE', data=df, palette=region_colors, ci=None)
+    plt.xlabel("Region", fontweight='bold')
+    plt.ylabel("School Survival Rate", fontweight='bold')
+    plt.xticks(rotation=45, fontsize=12)  # Rotate x-axis labels for better readability
+    plt.yticks(fontsize=12)
+    plt.tight_layout()
+    bar_plot_survival_path = os.path.join(app.config['STATIC_FOLDER'], 'bar_plot_survival.png')
+    plt.savefig(bar_plot_survival_path, bbox_inches='tight', dpi=300)
+    plt.close(bar_plot_survival)
+
+    # Bar Chart for Literacy Rates
+    bar_chart_literacy = plt.figure(figsize=(10, 6))
+    sns.barplot(x='TPR_REGION', y='LITERACY', data=df, palette=region_colors)
+    plt.xlabel("Region",fontweight='bold')
+    plt.ylabel("Literacy Rate", fontweight='bold')
+    plt.xticks(rotation=45, fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.ylim(0, 120)  # Set Y-axis limit to 120
+    plt.tight_layout()
+    plt.legend()
+    bar_chart_literacy_path = os.path.join(app.config['STATIC_FOLDER'], 'bar_chart_literacy.png')
+    plt.savefig(bar_chart_literacy_path, bbox_inches='tight', dpi=300)
+    plt.close(bar_chart_literacy)
+
+
+    return {
+        'bar_plot_tpr': bar_plot_tpr_path,
+        'line_chart_budget': line_chart_budget_path,
+        'line_chart_textbook': line_chart_textbook_path,
+        'bar_plot_survival': bar_plot_survival_path,
+        'bar_chart_literacy': bar_chart_literacy_path,
+    }
 
 
 @app.route('/')
@@ -181,6 +208,8 @@ def upload():
                     tpr=row['TPR'],
                     textbook=row['TEXTBOOK'],
                     literacy=row['LITERACY'],
+                    students=row['STUDENTS'],
+                    SURVIVAL_RATE = row['SURVIVAL_RATE']
                 )
                 db.session.add(summary)
             db.session.commit()
@@ -201,7 +230,6 @@ def upload():
     return render_template('upload.html', df=[], columns=[])
 
 
-''' jfeuhrfnmd '''
 @app.route('/purge', methods=['POST'])
 def purge():
     try:
